@@ -52,7 +52,7 @@ class HikeScreenWidget {
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: Container(
-              height: 100.h < 800 ? 40.h : 35.h,
+              height: 100.h < 800 ? 35.h : 30.h,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
@@ -70,17 +70,17 @@ class HikeScreenWidget {
                     SizedBox(
                       height: 3.5.h,
                     ),
-                    Flexible(
-                      child: HikeButton(
-                          buttonHeight: optbheight - 4,
-                          textSize: 16,
-                          text: 'Generate URL',
-                          textColor: Colors.white,
-                          buttonColor: kYellow,
-                          onTap: () async {
-                            generateUrl(passkey);
-                          }),
-                    ),
+                    // Flexible(
+                    //   child: HikeButton(
+                    //       buttonHeight: optbheight - 4,
+                    //       textSize: 16,
+                    //       text: 'Generate URL',
+                    //       textColor: Colors.white,
+                    //       buttonColor: kYellow,
+                    //       onTap: () async {
+                    //         generateUrl(passkey);
+                    //       }),
+                    // ),
                     SizedBox(
                       height: 2.h,
                     ),

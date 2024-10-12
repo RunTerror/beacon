@@ -62,6 +62,7 @@ class _AuthScreenState extends State<AuthScreen>
 
   Color leftColor = Colors.white;
   Color rightColor = Colors.black;
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +124,7 @@ class _AuthScreenState extends State<AuthScreen>
                                   child: PageView(
                                     controller: _pageController,
                                     onPageChanged: (i) {
+                                      currentPage = i;
                                       if (i == 0) {
                                         setState(() {
                                           rightColor = Colors.black;

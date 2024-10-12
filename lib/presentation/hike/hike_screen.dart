@@ -68,24 +68,24 @@ class _HikeScreenState extends State<HikeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: PipWidget(
-          onPipExited: () {
-            _panelController.open();
-          },
-          builder: (context) {
-            return BlocBuilder<HikeCubit, HikeState>(
-              builder: (context, state) {
-                if (state is InitialHikeState) {
-                  return Center(
-                      child: SpinKitWave(
-                    color: kYellow,
-                  ));
-                } else if (state is ErrorHikeState) {
-                  return Container(
-                    child: Center(child: Text('Restart beacon')),
-                  );
-                } else {
-                  return Scaffold(
-                      body: Stack(
+        onPipExited: () {
+          _panelController.open();
+        },
+        builder: (context) {
+          return BlocBuilder<HikeCubit, HikeState>(
+            builder: (context, state) {
+              if (state is InitialHikeState) {
+                return Center(
+                    child: SpinKitWave(
+                  color: kYellow,
+                ));
+              } else if (state is ErrorHikeState) {
+                return Container(
+                  child: Center(child: Text('Restart beacon')),
+                );
+              } else {
+                return Scaffold(
+                  body: Stack(
                     children: [
                       SlidingUpPanel(
                           onPanelOpened: () {
@@ -97,7 +97,7 @@ class _HikeScreenState extends State<HikeScreen>
                           ),
                           controller: _panelController,
                           maxHeight: 60.h,
-                          minHeight: isSmallsized ? 22.h : 18.h,
+                          minHeight: isSmallsized ? 22.h : 20.h,
                           panel: _SlidingPanelWidget(),
                           collapsed: _collapsedWidget(),
                           body: _mapScreen()),
@@ -107,7 +107,7 @@ class _HikeScreenState extends State<HikeScreen>
                           heroTag: 'BackButton',
                           backgroundColor: kYellow,
                           onPressed: () {
-                            SimplePip().enterPipMode();
+                            appRouter.maybePop();
                           },
                           child: Icon(
                             CupertinoIcons.back,
@@ -123,16 +123,19 @@ class _HikeScreenState extends State<HikeScreen>
                           alignment: Alignment(1, -0.7),
                           child: HikeScreenWidget.showMapViewSelector(context)),
                       Align(
-                          alignment: Alignment(0.85, -0.5),
-                          child: HikeScreenWidget.sosButton(
-                              widget.beacon.id!, context)),
+                        alignment: Alignment(0.85, -0.5),
+                        child: HikeScreenWidget.sosButton(
+                            widget.beacon.id!, context),
+                      ),
                     ],
-                  ));
-                }
-              },
-            );
-          },
-          pipChild: _mapScreen()),
+                  ),
+                );
+              }
+            },
+          );
+        },
+        pipChild: _mapScreen(),
+      ),
     );
   }
 
@@ -182,85 +185,90 @@ class _HikeScreenState extends State<HikeScreen>
   Widget _collapsedWidget() {
     var beacon = widget.beacon;
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          color: kBlue,
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(10),
-            topLeft: Radius.circular(10),
-          ),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        color: kBlue,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(10),
+          topLeft: Radius.circular(10),
         ),
-        child: BlocBuilder<PanelCubit, SlidingPanelState>(
-          builder: (context, state) {
-            return state.when(
-              initial: () {
-                return SpinKitCircle(color: kYellow);
-              },
-              loaded: (
-                isActive,
-                expiringTime,
-                leaderAddress,
-                leader,
-                followers,
-                message,
-              ) {
-                followers = followers ?? [];
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
+      ),
+      child: BlocBuilder<PanelCubit, SlidingPanelState>(
+        builder: (context, state) {
+          return state.when(
+            initial: () {
+              return SpinKitCircle(color: kYellow);
+            },
+            loaded: (
+              isActive,
+              expiringTime,
+              leaderAddress,
+              leader,
+              followers,
+              message,
+            ) {
+              followers = followers ?? [];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    child: Container(
                       alignment: Alignment.center,
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 0.5.h,
-                        width: 18.w,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                      height: 0.5.h,
+                      width: 18.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            10,
+                          ),
+                        ),
                       ),
                     ),
-                    Gap(10),
-                    Text(
-                        isActive == true
-                            ? 'Beacon expiring at ${expiringTime ?? '<>'}'
-                            : 'Beacon is expired',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontFamily: '',
-                            fontWeight: FontWeight.w700)),
-                    Gap(2),
-                    Text('Beacon leader at: ${leaderAddress ?? '<>'}',
-                        maxLines: 2,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontFamily: '',
-                            fontWeight: FontWeight.w600)),
-                    Gap(1.5),
-                    Text('Total followers: ${followers.length} ',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontFamily: '',
-                            fontWeight: FontWeight.w500)),
-                    Gap(1),
-                    Text('Share the pass key to join user: ${beacon.shortcode}',
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontFamily: '',
-                            fontWeight: FontWeight.w500))
-                  ],
-                );
-              },
-              error: (message) {
-                return Text(message.toString());
-              },
-            );
-          },
-        ));
+                  ),
+                  Gap(10),
+                  Text(
+                      isActive == true
+                          ? 'Beacon expiring at ${expiringTime ?? '<>'}'
+                          : 'Beacon is expired',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontFamily: '',
+                          fontWeight: FontWeight.w700)),
+                  Gap(2),
+                  Text('Beacon leader at: ${leaderAddress ?? '<>'}',
+                      maxLines: 2,
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontFamily: '',
+                          fontWeight: FontWeight.w600)),
+                  Gap(1.5),
+                  Text('Total followers: ${followers.length} ',
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontFamily: '',
+                          fontWeight: FontWeight.w500)),
+                  Gap(1),
+                  Text('Share the pass key to join user: ${beacon.shortcode}',
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                          fontFamily: '',
+                          fontWeight: FontWeight.w500))
+                ],
+              );
+            },
+            error: (message) {
+              return Text(message.toString());
+            },
+          );
+        },
+      ),
+    );
   }
 
   Widget _SlidingPanelWidget() {
