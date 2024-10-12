@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_config/flutter_config.dart';
@@ -17,5 +18,6 @@ class EnvironmentConfig {
 
   static Future<void> loadEnvVariables() async {
     await FlutterConfig.loadEnvVariables();
+    log(FlutterConfig.variables.toString());
   }
 }

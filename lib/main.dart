@@ -1,4 +1,5 @@
 import 'package:beacon/config/enviornment_config.dart';
+import 'package:beacon/firebase_options.dart';
 import 'package:beacon/presentation/auth/auth_cubit/auth_cubit.dart';
 import 'package:beacon/presentation/auth/verification_cubit/verification_cubit.dart';
 import 'package:beacon/presentation/group/cubit/group_cubit/group_cubit.dart';
@@ -8,6 +9,7 @@ import 'package:beacon/presentation/hike/cubit/panel_cubit/panel_cubit.dart';
 import 'package:beacon/presentation/home/home_cubit/home_cubit.dart';
 import 'package:beacon/presentation/group/cubit/members_cubit/members_cubit.dart';
 import 'package:beacon/locator.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +20,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // loading variables
   await EnvironmentConfig.loadEnvVariables();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   await setupLocator();
   await localApi.init();

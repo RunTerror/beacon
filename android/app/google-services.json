@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "224389230189",
+    "project_id": "assesment-b12c5",
+    "storage_bucket": "assesment-b12c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224389230189:android:4ce763b8873e2d9a229964",
+        "android_client_info": {
+          "package_name": "com.cc.beacon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224389230189-6878p027qibck5i3a3lciroctunugchm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cc.beacon",
+            "certificate_hash": "869bbfd77455e5c0e020519719265dadb60a8d37"
+          }
+        },
+        {
+          "client_id": "224389230189-eajdj5c2ep2pd4r57q89k7q27e3bj8eq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfrZXWFsPyhDtjXlI1CVr_c1VRaizUg5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "224389230189-eajdj5c2ep2pd4r57q89k7q27e3bj8eq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "224389230189-3qa8me02tig8qpfftdgrlf68e48r7941.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.beacon"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

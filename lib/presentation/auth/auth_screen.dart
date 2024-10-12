@@ -59,7 +59,6 @@ class _AuthScreenState extends State<AuthScreen>
   }
 
   PageController _pageController = PageController();
-
   Color leftColor = Colors.white;
   Color rightColor = Colors.black;
   int currentPage = 0;
@@ -124,14 +123,15 @@ class _AuthScreenState extends State<AuthScreen>
                                 Padding(
                                   padding: EdgeInsets.only(top: 20.0),
                                   child: _buildMenuBar(
-                                      context, _pageController, currentPage),
+                                    context,
+                                    _pageController,
+                                  ),
                                 ),
                                 Expanded(
                                   flex: 2,
                                   child: PageView(
                                     controller: _pageController,
                                     onPageChanged: (i) {
-                                      currentPage = i;
                                       if (i == 0) {
                                         setState(() {
                                           rightColor = Colors.black;
@@ -181,8 +181,7 @@ class _AuthScreenState extends State<AuthScreen>
         ));
   }
 
-  Widget _buildMenuBar(
-      BuildContext context, PageController pageController, int currentPage) {
+  Widget _buildMenuBar(BuildContext context, PageController pageController) {
     Size screensize = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 13.5.w),

@@ -1,4 +1,4 @@
-package com.example.beacon
+package com.cc.beacon
 
 import android.content.res.Configuration
 import androidx.annotation.NonNull
