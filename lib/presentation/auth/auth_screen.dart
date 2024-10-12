@@ -87,6 +87,13 @@ class _AuthScreenState extends State<AuthScreen>
             } else if (state is AuthVerificationState) {
               context.read<AuthCubit>().navigate();
             } else if (state is AuthErrorState) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _pageController.animateToPage(
+                  currentPage,
+                  duration: Duration(milliseconds: 1),
+                  curve: Curves.linear,
+                );
+              });
               utils.showSnackBar(state.error!, context,
                   duration: Duration(seconds: 2));
             }
@@ -116,8 +123,8 @@ class _AuthScreenState extends State<AuthScreen>
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(top: 20.0),
-                                  child:
-                                      _buildMenuBar(context, _pageController),
+                                  child: _buildMenuBar(
+                                      context, _pageController, currentPage),
                                 ),
                                 Expanded(
                                   flex: 2,
@@ -174,7 +181,8 @@ class _AuthScreenState extends State<AuthScreen>
         ));
   }
 
-  Widget _buildMenuBar(BuildContext context, PageController pageController) {
+  Widget _buildMenuBar(
+      BuildContext context, PageController pageController, int currentPage) {
     Size screensize = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 13.5.w),
